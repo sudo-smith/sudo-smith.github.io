@@ -1,13 +1,136 @@
-<!DOCTYPE =html>
-<!-- saved from url=(0062)file:///home/sebastian/website/sudo-smith.github.io/index.html -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head><body style="
-    font-size: 30px;
-    font-weight: 400;
-    font-style: italic;
-    font-family: inherit;
-"><div>
-		Sebastian Seibert von Fock
+<!DOCTYPE html>
+<html
+<html lang = "en-US">
+<head>
+	<link rel = "stylesheet" href="styles.css">
+	<title> 3D Object Difference Visualization </title>
+</head>
+<body>
+	<div id="header" style="height: 200px">
+			<h1> 3D Object Difference Visualization </h1> 
+			<h2> Sebastian Seibert von Fock </h2>
+			<h2> CSC 471 - Winter 2016 </h2>
 	</div>
+	<div id="canvas">
+	
+	<div id="wrapper">
+		<div id="content">
+		
+		<div style="margin:40px 20px">
+			<p>
+				The purpose of this project was to be able to take two 3D model obj files and visualize the difference between them. There is one reference model that can't be moved and one compare model which compares itself against the reference. The useful applications of this would be to, for example, take 2 different 3D models of the same object obtained from real world scanning and see what the differences are. This could then be used to create a more accurate combined model. Another application for this is to check if to see a percentage value of how different the two models are to check if they are the same object.<br>
+				<br>
+				I had two parts to my project.
+			</p>
+			<ul style = "list-style-type:circle"> 
+				<li> Have the user roughly align the models (User Alignment) </li>
+				<li> Compute and visualize the difference between the files (Computing and Visualizing Differences) </li>
+			</ul>
+		</div>
+		<div class = "img">
+			<figure>
+				<img src = "images/referenceModel.jpg" width = "300" style="padding-right: 30px">
+				<div class = "caption"><figcaption>reference model</figcaption></div>
+			</figure>
+			<figure>
+				<img src = "images/compareModel.jpg" width = "300" style = "padding-left: 30px">
+				<div class = "caption"><figcaption>compare model</figcaption></div>
+			</figure>
+		</div>
 
+		<hr>
+		<div class="subGroup">
+			<h3> User Alignment </h3>
+			<div class="img">
+				<img src = "images/roughAlignment.jpg" width = "500">
+				<br>
+				<div class="caption"><caption>models manually roughly aligned</caption></div>
+			</div>
+			<div>
+				<p>
+					My program had some basic commands that allow the user to move the compare model so that the user can roughly align it with the reference model. The user can move the compare model in all three axis (X, Y, and Z). He or she can also uniformly scale and rotate the compare model around the Y-axis. Finally, the user can rotate the entire world (both reference and compare model) around the Y-axis to check that the alignment is as close as they can get on all sides.
+					<br>
+					<br>
+					I used basic Matrix transforms to do this. To get user input I used both Keyboard presses and mouse movement (calculate mouse velocity per frame).
 
-</body></html>
+				</p>
+				<h4> Controls </h4>
+				<table>
+					<tr>
+						<td> Move in X and Y </td>
+						<td> Click and drag mouse </td>
+					</tr>
+					<tr>
+						<td> Fine move in X and Y </td>
+						<td> Arrow Keys </td>
+					</tr>
+					<tr>
+						<td> Rotate around Y-axis </td>
+						<td> 'A' and 'D' Keys </td>
+					</tr>
+					<tr>
+						<td> Fine rotate around Y-axis </td>
+						<td> 'Q' and 'E' Keys </td>
+					</tr>
+					<tr>
+						<td> Scale (uniformly) </td>
+						<td> 'I' and 'K' Keys </td>
+					</tr>
+					<tr>
+						<td> Fine scale (uniformly) </td>
+						<td> 'J' and 'L' Keys </td>
+					</tr>
+					<tr>
+						<td> Toggle compute and show distances </td>
+						<td> 'C' Key </td>
+					</tr>
+					<tr>
+						<td> Toggle show/hide reference model </td>
+						<td> 'B' Keys </td>
+					</tr>
+					<tr>
+						<td> Rotate world (uniformly) </td>
+						<td> 'T' and 'Y' Keys </td>
+					</tr>
+					<tr>
+						<td> Exit </td>
+						<td> 'esc' Key </td>
+					</tr>
+				</table>
+			</div>
+			<h3>Computing and Visualizing Differences</h3>
+			<div class="img">
+				<img src = "images/compareDifference.jpg" width = "500">
+				<br>
+				<div class="caption"><caption>differences of the models shown in red</caption></div>
+			</div>
+			<div>
+				<p>
+					When pressing the 'C' key the program will start to compare all the vertices on the compare model with all the vertices in the reference model. It will then shade the compare model different shades of red depending on how far away the closest vertices of the reference model is with a bright red meaning very far away and black meaning that they are right on top of each other.
+				</p>
+
+			</div>
+		</div>
+		<hr>
+		<h2> Lesson's Learned </h2>
+		<div>
+			<p>
+				The main lesson that I learned is how hard it is to figure out exactly what gets computed in the CPU (cpp files), what gets computed in the GPU (shader files), and how to send data between them. I had originally tried to compute the difference in the CPU and then sending the array of differences to the GPU. This proved to be very difficult especially since I only wanted to send it data when the user toggled the compute/visualize key since I didn't want to have the program have to constantly compute the difference before the user roughly algined the models. In hindsight, this would have most likely been much slower anyway since the GPU specializes in doing many simple things at one time.
+			</p>
+		</div>
+		<hr>
+		<h2> Future Goals </h2>
+		<div>
+			<p>
+				There are several things I would like to add and improve on in the program in the future.
+				<ul style = "list-style-type:circle">
+					<li> Improve running time by only computing difference of vertices close to each other (don't compare to every other vertex in the reference model). </li>
+					<li> Add functionality to further auto align once user has roughly placed model in correct place </li>
+					<li> Add functionality for user to select areas of difference and decide to either add these or delete these to a third combined model. </li>
+				</ul>
+			</div>
+		</div>
+	</div>
+		</div>
+	</body>
+	</html>
